@@ -3,6 +3,7 @@
     "description": "High level Elastic Search client built on top of Elastic's low level client.  Probably slower but definitely more developer friendly.",
     "license": "MIT",
     "type": "library",
+    "minimum-stability": "stable",
     "authors": [
         {
             "name": "Andy Fletcher",
