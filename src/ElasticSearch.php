@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Leverage\ElasticSearch;
 
 use ElasticSearch\Client;
+use Leverage\ElasticSearch\Interfaces\QueryInterface;
 
 class ElasticSearch
 {
@@ -17,15 +18,8 @@ class ElasticSearch
     }
 
     public function get(
-        array $params
+        QueryInterface $query
     ): array {
-        return $this->client->get($params);
-    }
-
-    public function __call(
-        string $method,
-        array $args
-    ) {
-        return $this->client->$method(...$args);
+        return $this->client->get($query->serializeQuery());
     }
 }
