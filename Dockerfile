@@ -14,6 +14,7 @@ RUN apt-get install -y php-mysql
 RUN apt-get install -y php-xml
 RUN apt-get install -y php-json
 RUN apt-get install -y php-zip
+RUN apt-get install -y unzip
 
 RUN rm -rf /var/lib/apt/lists/*
 
