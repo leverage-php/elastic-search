@@ -20,6 +20,8 @@
         "elasticsearch/elasticsearch": "^5.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^9.5"
+        "phpunit/phpunit": "^9.5",
+        "aws/aws-sdk-php": "^3.180",
+        "jsq/amazon-es-php": "^0.3.0"
     }
 }
