@@ -1,0 +1,20 @@
+{
+    "name": "leverage-php/elastic-search",
+    "description": "High level Elastic Search client built on top of Elastic's low level client.  Probably slower but definitely more developer friendly.",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Andy Fletcher",
+            "email": "andy@prestigedigital.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Leverage\\ElasticSearch\\": "src/"
+        }
+    },
+    "require": {
+        "php": ">=7.4",
+        "elasticsearch/elasticsearch": "^5.0"
+    }
+}
