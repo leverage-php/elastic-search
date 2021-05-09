@@ -15,3 +15,11 @@ services:
     user: ${UID}:${GID}
     volumes:
       - .:/app
+
+  phpstan:
+    build:
+      context: .
+    entrypoint: phpstan
+    user: ${UID}:${GID}
+    volumes:
+      - .:/app

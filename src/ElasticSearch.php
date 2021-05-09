@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Leverage\ElasticSearch;
 
-use ElasticSearch\Client;
+use Elasticsearch\Client;
 use Leverage\ElasticSearch\Interfaces\QueryInterface;
 
 class ElasticSearch

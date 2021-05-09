@@ -15,6 +15,7 @@ RUN apt-get install -y php-xml
 RUN apt-get install -y php-json
 RUN apt-get install -y php-zip
 RUN apt-get install -y unzip
+RUN apt-get install -y wget
 
 RUN rm -rf /var/lib/apt/lists/*
 
@@ -23,6 +24,11 @@ RUN curl -sS https://getcomposer.org/installer -o composer-setup.php
 RUN php composer-setup.php \
     --filename=composer \
     --install-dir=/usr/local/bin
+
+# install PHPStan
+RUN wget -O phpstan.phar https://github.com/phpstan/phpstan/raw/master/phpstan.phar
+RUN chmod a+x phpstan.phar
+RUN mv phpstan.phar /usr/local/bin/phpstan
 
 RUN useradd --create-home --shell /bin/bash dev
 
