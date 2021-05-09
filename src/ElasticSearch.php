@@ -16,6 +16,12 @@ class ElasticSearch
         $this->client = $client;
     }
 
+    public function get(
+        array $params
+    ): array {
+        return $this->client->get($params);
+    }
+
     public function __call(
         string $method,
         array $args
