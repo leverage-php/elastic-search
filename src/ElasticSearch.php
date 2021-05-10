@@ -34,4 +34,11 @@ class ElasticSearch
     ): array {
         return $this->client->index($query->serializeQuery());
     }
+
+    public function __call(
+        string $method,
+        array $args
+    ) {
+        return $this->client->$method(...$args);
+    }
 }
