@@ -23,3 +23,11 @@ services:
     user: ${UID}:${GID}
     volumes:
       - .:/app
+
+  phpunit:
+    build:
+      context: .
+    entrypoint: ./vendor/bin/phpunit
+    user: ${UID}:${GID}
+    volumes:
+      - .:/app
