@@ -17,9 +17,21 @@ class ElasticSearch
         $this->client = $client;
     }
 
+    public function bulk(
+        QueryInterface $query
+    ): array {
+        return $this->client->bulk($query->serializeQuery());
+    }
+
     public function get(
         QueryInterface $query
     ): array {
         return $this->client->get($query->serializeQuery());
+    }
+
+    public function index(
+        QueryInterface $query
+    ): array {
+        return $this->client->index($query->serializeQuery());
     }
 }
