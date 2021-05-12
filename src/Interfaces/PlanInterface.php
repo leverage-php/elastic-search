@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Leverage\ElasticSearch\Interfaces;
 
-interface QueryInterface
+interface PlanInterface
 {
-    public function serializeQuery(): array;
+    public function prepare(): array;
 }

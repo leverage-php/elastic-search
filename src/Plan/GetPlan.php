@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Leverage\ElasticSearch\Query;
+namespace Leverage\ElasticSearch\Plan;
 
-use Leverage\ElasticSearch\Interfaces\QueryInterface;
+use Leverage\ElasticSearch\Interfaces\PlanInterface;
 
-class GetQuery implements QueryInterface
+class GetPlan implements PlanInterface
 {
     /** @var string */
     private $index;
@@ -27,7 +27,7 @@ class GetQuery implements QueryInterface
         $this->id = $id;
     }
 
-    public function serializeQuery(): array
+    public function prepare(): array
     {
         return [
             'index' => $this->index,

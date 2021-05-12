@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Leverage\ElasticSearch\Query;
+namespace Leverage\ElasticSearch\Plan;
 
-use Leverage\ElasticSearch\Interfaces\BulkQueryInterface;
-use Leverage\ElasticSearch\Interfaces\QueryInterface;
+use Leverage\ElasticSearch\Interfaces\BulkInterface;
+use Leverage\ElasticSearch\Interfaces\PlanInterface;
 
-class IndexQuery implements BulkQueryInterface, QueryInterface
+class IndexPlan implements BulkInterface, PlanInterface
 {
     /** @var string */
     private $index;
@@ -19,26 +19,26 @@ class IndexQuery implements BulkQueryInterface, QueryInterface
     private $id;
 
     /** @var array */
-    private $body;
+    private $data;
 
     public function __construct(
         string $index,
         string $type,
         string $id,
-        array $body
+        array $data
     ) {
         $this->index = $index;
         $this->type = $type;
         $this->id = $id;
-        $this->body = $body;
+        $this->data = $data;
     }
 
-    public function serializeBody(): array
+    public function prepareBody(): array
     {
-        return $this->body;
+        return $this->data;
     }
 
-    public function serializeHeader(): array
+    public function prepareHeader(): array
     {
         return [
             'index' => [
@@ -49,13 +49,13 @@ class IndexQuery implements BulkQueryInterface, QueryInterface
         ];
     }
 
-    public function serializeQuery(): array
+    public function prepare(): array
     {
         return [
             'index' => $this->index,
             'type' => $this->type,
             'id' => $this->id,
-            'body' => $this->body,
+            'body' => $this->data,
         ];
     }
 }

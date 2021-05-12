@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Leverage\ElasticSearch;
 
 use Elasticsearch\Client;
-use Leverage\ElasticSearch\Interfaces\QueryInterface;
+use Leverage\ElasticSearch\Interfaces\PlanInterface;
 
 class ElasticSearch
 {
@@ -18,21 +18,21 @@ class ElasticSearch
     }
 
     public function bulk(
-        QueryInterface $query
+        PlanInterface $plan
     ): array {
-        return $this->client->bulk($query->serializeQuery());
+        return $this->client->bulk($plan->prepare());
     }
 
     public function get(
-        QueryInterface $query
+        PlanInterface $plan
     ): array {
-        return $this->client->get($query->serializeQuery());
+        return $this->client->get($plan->prepare());
     }
 
     public function index(
-        QueryInterface $query
+        PlanInterface $plan
     ): array {
-        return $this->client->index($query->serializeQuery());
+        return $this->client->index($plan->prepare());
     }
 
     public function __call(
