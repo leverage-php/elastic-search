@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Leverage\ElasticSearch\Plan\Repository;
 
-class CreateRepositoryPlan implements PlanInterface
-{
-    /** @var string */
-    private $name;
+use Leverage\ElasticSearch\Interfaces\PlanInterface;
+use Leverage\ElasticSearch\Interfaces\RepositorySettingsInterface;
 
+class CreateRepositoryPlan extends AbstractRepositoryPlan implements PlanInterface
+{
     /** @var string */
     private $type;
 
-    /** @var array */
+    /** @var RepositorySettingsInterface */
     private $settings;
 
     public function __construct(
@@ -20,17 +20,20 @@ class CreateRepositoryPlan implements PlanInterface
         string $type,
         RepositorySettingsInterface $settings
     ) {
-        $this->name = $name;
+        parent::__construct($name);
+
         $this->type = $type;
         $this->settings = $settings;
     }
 
-    public function serializePlan(): array
-    {
-        return [
-            'repository' => $this->name,
-            'type' => $this->type,
-            'settings' => $this->serializeSettings(),
-        ];
+    public function prepare(
+        array $plan = []
+    ): array {
+        return parent::prepare([
+            'body' => [
+                'type' => $this->type,
+                'settings' => $this->settings->prepare(),
+            ],
+        ]);
     }
 }

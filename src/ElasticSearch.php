@@ -35,6 +35,29 @@ class ElasticSearch
         return $this->client->index($plan->prepare());
     }
 
+    #region Repository
+    public function createRepository(
+        PlanInterface $plan
+    ): array {
+        return $this->client->snapshot()->createRepository($plan->prepare());
+    }
+
+    public function getRepository(
+        PlanInterface $plan
+    ): array {
+        return $this->client->snapshot()->getRepository($plan->prepare());
+    }
+
+    public function deleteRepository(
+        PlanInterface $plan
+    ): array {
+        return $this->client->snapshot()->deleteRepository($plan->prepare());
+    }
+    #endregion
+
+    /**
+     * @return mixed
+     */
     public function __call(
         string $method,
         array $args

@@ -18,6 +18,7 @@ class ElasticSearchDateTimeTest extends TestCase
 
     public function setUp(): void
     {
+        /** @var DateTime */
         $at = DateTime::createFromFormat(
             self::FORMAT,
             self::AT
