@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Test;
 
 use Elasticsearch\Client;
+use Elasticsearch\Namespaces\IndicesNamespace;
 use Elasticsearch\Namespaces\SnapshotNamespace;
 use Leverage\ElasticSearch\ElasticSearch;
+use Leverage\ElasticSearch\Plan\Index;
 use Leverage\ElasticSearch\Plan\Snapshot;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -23,6 +25,9 @@ class ElasticSearchTest extends TestCase
     /** @var Client */
     private $client;
 
+    /** @var IndicesNamespace&MockObject */
+    private $indices;
+
     /** @var SnapshotNamespace&MockObject */
     private $snapshot;
 
@@ -34,6 +39,7 @@ class ElasticSearchTest extends TestCase
 
     private function mockClient(): Client
     {
+        $this->indices = $this->createMock(IndicesNamespace::class);
         $this->snapshot = $this->createMock(SnapshotNamespace::class);
 
         $client = $this->createMock(Client::class);
@@ -42,6 +48,25 @@ class ElasticSearchTest extends TestCase
         return $client;
     }
 
+    #region Index
+    private function testCreateIndex(): void
+    {
+        $this->indices->method('create')->willReturn(self::EXPECTED);
+        $plan = $this->createMock(Index\CreateIndexPlan::class);
+        $response = $this->elasticSearch->createIndex($plan);
+        $this->assertSame(self::EXPECTED, $response);
+    }
+
+    private function testDeleteIndex(): void
+    {
+        $this->indices->method('create')->willReturn(self::EXPECTED);
+        $plan = $this->createMock(Index\DeleteIndexPlan::class);
+        $response = $this->elasticSearch->deleteIndex($plan);
+        $this->assertSame(self::EXPECTED, $response);
+    }
+    #region
+
+    #region Snapshot
     public function testCreateSnapshot(): void
     {
         $this->snapshot->method('create')->willReturn(self::EXPECTED);
@@ -65,4 +90,5 @@ class ElasticSearchTest extends TestCase
         $response = $this->elasticSearch->getSnapshot($plan);
         $this->assertSame(self::EXPECTED, $response);
     }
+    #endregion
 }
