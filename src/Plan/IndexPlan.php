@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace Leverage\ElasticSearch\Plan;
 
 use Leverage\ElasticSearch\Interfaces\BulkInterface;
-use Leverage\ElasticSearch\Interfaces\PlanInterface;
 
-class IndexPlan implements BulkInterface, PlanInterface
+class IndexPlan implements BulkInterface
 {
     /** @var string */
     private $index;

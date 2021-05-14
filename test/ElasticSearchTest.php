@@ -55,6 +55,30 @@ class ElasticSearchTest extends TestCase
     }
 
     #region Base
+    public function testBulk(): void
+    {
+        $this->client->method('bulk')->willReturn(self::EXPECTED);
+        $plan = $this->createMock(Plan\BulkPlan::class);
+        $response = $this->elasticSearch->bulk($plan);
+        $this->assertSame(self::EXPECTED, $response);
+    }
+
+    public function testGet(): void
+    {
+        $this->client->method('get')->willReturn(self::EXPECTED);
+        $plan = $this->createMock(Plan\GetPlan::class);
+        $response = $this->elasticSearch->get($plan);
+        $this->assertSame(self::EXPECTED, $response);
+    }
+
+    public function testIndex(): void
+    {
+        $this->client->method('index')->willReturn(self::EXPECTED);
+        $plan = $this->createMock(Plan\IndexPlan::class);
+        $response = $this->elasticSearch->index($plan);
+        $this->assertSame(self::EXPECTED, $response);
+    }
+
     public function testReindex(): void
     {
         $this->client->method('reindex')->willReturn(self::EXPECTED);

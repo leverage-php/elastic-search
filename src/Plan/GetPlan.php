@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Leverage\ElasticSearch\Plan;
 
-use Leverage\ElasticSearch\Interfaces\PlanInterface;
-
-class GetPlan implements PlanInterface
+class GetPlan
 {
     /** @var string */
     private $index;

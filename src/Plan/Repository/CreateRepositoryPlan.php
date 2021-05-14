@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace Leverage\ElasticSearch\Plan\Repository;
 
-use Leverage\ElasticSearch\Interfaces\PlanInterface;
 use Leverage\ElasticSearch\Interfaces\RepositorySettingsInterface;
 
-class CreateRepositoryPlan extends AbstractRepositoryPlan implements PlanInterface
+class CreateRepositoryPlan extends AbstractRepositoryPlan
 {
     /** @var string */
     private $type;

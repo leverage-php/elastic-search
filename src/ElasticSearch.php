@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Leverage\ElasticSearch;
 
 use Elasticsearch\Client;
-use Leverage\ElasticSearch\Interfaces\PlanInterface;
 use Leverage\ElasticSearch\Plan;
 use Leverage\ElasticSearch\Plan\Index;
 use Leverage\ElasticSearch\Plan\Repository;
@@ -22,19 +21,19 @@ class ElasticSearch
     }
 
     public function bulk(
-        PlanInterface $plan
+        Plan\BulkPlan $plan
     ): array {
         return $this->client->bulk($plan->prepare());
     }
 
     public function get(
-        PlanInterface $plan
+        Plan\GetPlan $plan
     ): array {
         return $this->client->get($plan->prepare());
     }
 
     public function index(
-        PlanInterface $plan
+        Plan\IndexPlan $plan
     ): array {
         return $this->client->index($plan->prepare());
     }
