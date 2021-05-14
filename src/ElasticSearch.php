@@ -6,6 +6,7 @@ namespace Leverage\ElasticSearch;
 
 use Elasticsearch\Client;
 use Leverage\ElasticSearch\Interfaces\PlanInterface;
+use Leverage\ElasticSearch\Plan;
 use Leverage\ElasticSearch\Plan\Index;
 use Leverage\ElasticSearch\Plan\Repository;
 use Leverage\ElasticSearch\Plan\Snapshot;
@@ -36,6 +37,12 @@ class ElasticSearch
         PlanInterface $plan
     ): array {
         return $this->client->index($plan->prepare());
+    }
+
+    public function reindex(
+        Plan\ReindexPlan $plan
+    ): array {
+        return $this->client->reindex($plan->prepare());
     }
 
     #region Index

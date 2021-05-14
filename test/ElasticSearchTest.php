@@ -8,6 +8,7 @@ use Elasticsearch\Client;
 use Elasticsearch\Namespaces\IndicesNamespace;
 use Elasticsearch\Namespaces\SnapshotNamespace;
 use Leverage\ElasticSearch\ElasticSearch;
+use Leverage\ElasticSearch\Plan;
 use Leverage\ElasticSearch\Plan\Index;
 use Leverage\ElasticSearch\Plan\Repository;
 use Leverage\ElasticSearch\Plan\Snapshot;
@@ -23,7 +24,7 @@ class ElasticSearchTest extends TestCase
     /** @var ElasticSearch */
     private $elasticSearch;
 
-    /** @var Client */
+    /** @var Client&MockObject */
     private $client;
 
     /** @var IndicesNamespace&MockObject */
@@ -38,19 +39,33 @@ class ElasticSearchTest extends TestCase
         $this->elasticSearch = new ElasticSearch($this->client);
     }
 
+    /**
+     * @return Client&MockObject
+     */
     private function mockClient(): Client
     {
         $this->indices = $this->createMock(IndicesNamespace::class);
         $this->snapshot = $this->createMock(SnapshotNamespace::class);
 
         $client = $this->createMock(Client::class);
+        $client->method('indices')->willReturn($this->indices);
         $client->method('snapshot')->willReturn($this->snapshot);
 
         return $client;
     }
 
+    #region Base
+    public function testReindex(): void
+    {
+        $this->client->method('reindex')->willReturn(self::EXPECTED);
+        $plan = $this->createMock(Plan\ReindexPlan::class);
+        $response = $this->elasticSearch->reindex($plan);
+        $this->assertSame(self::EXPECTED, $response);
+    }
+    #endregion
+
     #region Index
-    private function testCreateIndex(): void
+    public function testCreateIndex(): void
     {
         $this->indices->method('create')->willReturn(self::EXPECTED);
         $plan = $this->createMock(Index\CreateIndexPlan::class);
@@ -58,9 +73,9 @@ class ElasticSearchTest extends TestCase
         $this->assertSame(self::EXPECTED, $response);
     }
 
-    private function testDeleteIndex(): void
+    public function testDeleteIndex(): void
     {
-        $this->indices->method('create')->willReturn(self::EXPECTED);
+        $this->indices->method('delete')->willReturn(self::EXPECTED);
         $plan = $this->createMock(Index\DeleteIndexPlan::class);
         $response = $this->elasticSearch->deleteIndex($plan);
         $this->assertSame(self::EXPECTED, $response);
