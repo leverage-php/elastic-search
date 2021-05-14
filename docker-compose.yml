@@ -19,7 +19,7 @@ services:
   phpstan:
     build:
       context: .
-    entrypoint: phpstan
+    entrypoint: phpstan analyse --level 8 src/ test/
     user: ${UID}:${GID}
     volumes:
       - .:/app
