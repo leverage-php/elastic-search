@@ -7,6 +7,7 @@ namespace Leverage\ElasticSearch;
 use Elasticsearch\Client;
 use Leverage\ElasticSearch\Interfaces\PlanInterface;
 use Leverage\ElasticSearch\Plan\Index;
+use Leverage\ElasticSearch\Plan\Repository;
 use Leverage\ElasticSearch\Plan\Snapshot;
 
 class ElasticSearch
@@ -53,19 +54,19 @@ class ElasticSearch
 
     #region Repository
     public function createRepository(
-        PlanInterface $plan
+        Repository\CreateRepositoryPlan $plan
     ): array {
         return $this->client->snapshot()->createRepository($plan->prepare());
     }
 
     public function getRepository(
-        PlanInterface $plan
+        Repository\GetRepositoryPlan $plan
     ): array {
         return $this->client->snapshot()->getRepository($plan->prepare());
     }
 
     public function deleteRepository(
-        PlanInterface $plan
+        Repository\DeleteRepositoryPlan $plan
     ): array {
         return $this->client->snapshot()->deleteRepository($plan->prepare());
     }

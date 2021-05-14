@@ -9,6 +9,7 @@ use Elasticsearch\Namespaces\IndicesNamespace;
 use Elasticsearch\Namespaces\SnapshotNamespace;
 use Leverage\ElasticSearch\ElasticSearch;
 use Leverage\ElasticSearch\Plan\Index;
+use Leverage\ElasticSearch\Plan\Repository;
 use Leverage\ElasticSearch\Plan\Snapshot;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -65,6 +66,38 @@ class ElasticSearchTest extends TestCase
         $this->assertSame(self::EXPECTED, $response);
     }
     #region
+
+    #region Repository
+    public function testCreateRepository(): void
+    {
+        $this->snapshot->method('createRepository')
+            ->willReturn(self::EXPECTED)
+        ;
+        $plan = $this->createMock(Repository\CreateRepositoryPlan::class);
+        $response = $this->elasticSearch->createRepository($plan);
+        $this->assertSame(self::EXPECTED, $response);
+    }
+
+    public function testDeleteRepository(): void
+    {
+        $this->snapshot->method('deleteRepository')
+            ->willReturn(self::EXPECTED)
+        ;
+        $plan = $this->createMock(Repository\DeleteRepositoryPlan::class);
+        $response = $this->elasticSearch->deleteRepository($plan);
+        $this->assertSame(self::EXPECTED, $response);
+    }
+
+    public function testGetRepository(): void
+    {
+        $this->snapshot->method('getRepository')
+            ->willReturn(self::EXPECTED)
+        ;
+        $plan = $this->createMock(Repository\GetRepositoryPlan::class);
+        $response = $this->elasticSearch->getRepository($plan);
+        $this->assertSame(self::EXPECTED, $response);
+    }
+    #endregion
 
     #region Snapshot
     public function testCreateSnapshot(): void
