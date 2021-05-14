@@ -90,6 +90,12 @@ class ElasticSearch
     ): array {
         return $this->client->snapshot()->get($plan->prepare());
     }
+
+    public function restoreSnapshot(
+        Snapshot\RestoreSnapshotPlan $plan
+    ): array {
+        return $this->client->snapshot()->restore($plan->prepare());
+    }
     #endregion
 
     /**

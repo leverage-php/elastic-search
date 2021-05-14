@@ -123,5 +123,13 @@ class ElasticSearchTest extends TestCase
         $response = $this->elasticSearch->getSnapshot($plan);
         $this->assertSame(self::EXPECTED, $response);
     }
+
+    public function testRestoreSnapshot(): void
+    {
+        $this->snapshot->method('restore')->willReturn(self::EXPECTED);
+        $plan = $this->createMock(Snapshot\RestoreSnapshotPlan::class);
+        $response = $this->elasticSearch->restoreSnapshot($plan);
+        $this->assertSame(self::EXPECTED, $response);
+    }
     #endregion
 }
