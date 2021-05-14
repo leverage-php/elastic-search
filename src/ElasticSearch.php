@@ -6,6 +6,7 @@ namespace Leverage\ElasticSearch;
 
 use Elasticsearch\Client;
 use Leverage\ElasticSearch\Interfaces\PlanInterface;
+use Leverage\ElasticSearch\Plan\Snapshot;
 
 class ElasticSearch
 {
@@ -52,6 +53,26 @@ class ElasticSearch
         PlanInterface $plan
     ): array {
         return $this->client->snapshot()->deleteRepository($plan->prepare());
+    }
+    #endregion
+
+    #region Snapshot
+    public function createSnapshot(
+        Snapshot\CreateSnapshotPlan $plan
+    ): array {
+        return $this->client->snapshot()->create($plan->prepare());
+    }
+
+    public function deleteSnapshot(
+        Snapshot\DeleteSnapshotPlan $plan
+    ): array {
+        return $this->client->snapshot()->delete($plan->prepare());
+    }
+
+    public function getSnapshot(
+        Snapshot\GetSnapshotPlan $plan
+    ): array {
+        return $this->client->snapshot()->get($plan->prepare());
     }
     #endregion
 
