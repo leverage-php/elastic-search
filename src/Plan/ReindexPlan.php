@@ -17,6 +17,9 @@ class ReindexPlan
     /** @var ?QueryInterface */
     private $query;
 
+    /** @var bool */
+    private $waitForCompletion = true;
+
     public function __construct(
         string $sourceIndex,
         string $destIndex,
@@ -44,6 +47,17 @@ class ReindexPlan
                     'index' => $this->destIndex,
                 ],
             ],
+            'wait_for_completion' => $this->waitForCompletion
+                ? 'true'
+                : 'false'
+            ,
         ];
+    }
+
+    public function setWaitForCompletion(
+        bool $waitForCompletion
+    ): self {
+        $this->waitForCompletion = $waitForCompletion;
+        return $this;
     }
 }
