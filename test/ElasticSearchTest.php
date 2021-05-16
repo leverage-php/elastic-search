@@ -86,6 +86,14 @@ class ElasticSearchTest extends TestCase
         $response = $this->elasticSearch->reindex($plan);
         $this->assertSame(self::EXPECTED, $response);
     }
+
+    public function testSearch(): void
+    {
+        $this->client->method('search')->willReturn(self::EXPECTED);
+        $plan = $this->createMock(Plan\SearchPlan::class);
+        $response = $this->elasticSearch->search($plan);
+        $this->assertSame(self::EXPECTED, $response);
+    }
     #endregion
 
     #region Index

@@ -44,6 +44,12 @@ class ElasticSearch
         return $this->client->reindex($plan->prepare());
     }
 
+    public function search(
+        Plan\SearchPlan $plan
+    ): array {
+        return $this->client->search($plan->prepare());
+    }
+
     #region Index
     public function createIndex(
         Index\CreateIndexPlan $plan
