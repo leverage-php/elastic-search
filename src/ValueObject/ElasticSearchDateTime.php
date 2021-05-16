@@ -6,6 +6,8 @@ namespace Leverage\ElasticSearch\ValueObject;
 
 use DateInterval;
 use DateTime;
+use DateTimeZone;
+use Exception;
 use JsonSerializable;
 
 class ElasticSearchDateTime implements JsonSerializable
@@ -13,6 +15,20 @@ class ElasticSearchDateTime implements JsonSerializable
     private const DATETIME_FORMAT = 'U u';
 
     private $at;
+
+    public static function createfromFormat(
+        string $format,
+        string $datetime,
+        DateTimeZone $timezone = null
+    ): self {
+        $at = DateTime::createFromFormat($format, $datetime, $timezone);
+
+        if (!$at) {
+            throw new Exception('Unable to create DateTime');
+        }
+
+        return new ElasticSearchDateTime($at);
+    }
 
     public function __construct(
         DateTime $at = null

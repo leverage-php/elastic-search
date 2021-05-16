@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Test\ValueObject;
 
-use DateTime;
 use Leverage\ElasticSearch\ValueObject\ElasticSearchDateTime;
 use PHPUnit\Framework\TestCase;
 
@@ -18,12 +17,10 @@ class ElasticSearchDateTimeTest extends TestCase
 
     public function setUp(): void
     {
-        /** @var DateTime */
-        $at = DateTime::createFromFormat(
+        $this->at = ElasticSearchDateTime::createFromFormat(
             self::FORMAT,
             self::AT
         );
-        $this->at = new ElasticSearchDateTime($at);
     }
 
     public function testJsonSerialize(): void
