@@ -7,11 +7,13 @@ namespace Test;
 use Elasticsearch\Client;
 use Elasticsearch\Namespaces\IndicesNamespace;
 use Elasticsearch\Namespaces\SnapshotNamespace;
+use Elasticsearch\Namespaces\TasksNamespace;
 use Leverage\ElasticSearch\ElasticSearch;
 use Leverage\ElasticSearch\Plan;
 use Leverage\ElasticSearch\Plan\Index;
 use Leverage\ElasticSearch\Plan\Repository;
 use Leverage\ElasticSearch\Plan\Snapshot;
+use Leverage\ElasticSearch\Plan\Task;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -33,6 +35,9 @@ class ElasticSearchTest extends TestCase
     /** @var SnapshotNamespace&MockObject */
     private $snapshot;
 
+    /** @var TasksNamespace&MockObject */
+    private $task;
+
     public function setUp(): void
     {
         $this->client = $this->mockClient();
@@ -46,10 +51,12 @@ class ElasticSearchTest extends TestCase
     {
         $this->indices = $this->createMock(IndicesNamespace::class);
         $this->snapshot = $this->createMock(SnapshotNamespace::class);
+        $this->task = $this->createMock(TasksNamespace::class);
 
         $client = $this->createMock(Client::class);
         $client->method('indices')->willReturn($this->indices);
         $client->method('snapshot')->willReturn($this->snapshot);
+        $client->method('tasks')->willReturn($this->task);
 
         return $client;
     }
@@ -112,7 +119,7 @@ class ElasticSearchTest extends TestCase
         $response = $this->elasticSearch->deleteIndex($plan);
         $this->assertSame(self::EXPECTED, $response);
     }
-    #region
+    #endregion
 
     #region Repository
     public function testCreateRepository(): void
@@ -176,6 +183,16 @@ class ElasticSearchTest extends TestCase
         $this->snapshot->method('restore')->willReturn(self::EXPECTED);
         $plan = $this->createMock(Snapshot\RestoreSnapshotPlan::class);
         $response = $this->elasticSearch->restoreSnapshot($plan);
+        $this->assertSame(self::EXPECTED, $response);
+    }
+    #endregion
+
+    #region Task
+    public function testGetTask(): void
+    {
+        $this->task->method('get')->willReturn(self::EXPECTED);
+        $plan = $this->createMock(Task\GetTaskPlan::class);
+        $response = $this->elasticSearch->getTask($plan);
         $this->assertSame(self::EXPECTED, $response);
     }
     #endregion

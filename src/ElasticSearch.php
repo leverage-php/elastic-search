@@ -9,6 +9,7 @@ use Leverage\ElasticSearch\Plan;
 use Leverage\ElasticSearch\Plan\Index;
 use Leverage\ElasticSearch\Plan\Repository;
 use Leverage\ElasticSearch\Plan\Snapshot;
+use Leverage\ElasticSearch\Plan\Task;
 
 class ElasticSearch
 {
@@ -107,6 +108,14 @@ class ElasticSearch
         Snapshot\RestoreSnapshotPlan $plan
     ): array {
         return $this->client->snapshot()->restore($plan->prepare());
+    }
+    #endregion
+
+    #region Task
+    public function getTask(
+        Task\GetTaskPlan $plan
+    ): array {
+        return $this->client->tasks()->get($plan->prepare());
     }
     #endregion
 
