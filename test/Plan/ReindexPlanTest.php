@@ -32,6 +32,7 @@ class ReindexPlanTest extends TestCase
                     'index' => self::DEST_INDEX,
                 ],
             ],
+            'wait_for_completion' => 'true',
         ];
 
         $this->assertSame($EXPECTED, $this->plan->prepare());
