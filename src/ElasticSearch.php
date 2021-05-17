@@ -63,6 +63,12 @@ class ElasticSearch
     ): array {
         return $this->client->indices()->delete($plan->prepare());
     }
+
+    public function getIndex(
+        Index\GetIndexPlan $plan
+    ): array {
+        return $this->client->indices()->get($plan->prepare());
+    }
     #endregion
 
     #region Repository

@@ -119,6 +119,14 @@ class ElasticSearchTest extends TestCase
         $response = $this->elasticSearch->deleteIndex($plan);
         $this->assertSame(self::EXPECTED, $response);
     }
+
+    public function testGetIndex(): void
+    {
+        $this->indices->method('get')->willReturn(self::EXPECTED);
+        $plan = $this->createMock(Index\GetIndexPlan::class);
+        $response = $this->elasticSearch->getIndex($plan);
+        $this->assertSame(self::EXPECTED, $response);
+    }
     #endregion
 
     #region Repository
