@@ -131,6 +131,12 @@ class ElasticSearch
     ): array {
         return $this->client->snapshot()->restore($plan->prepare());
     }
+
+    public function statusSnapshot(
+        Snapshot\StatusSnapshotPlan $plan
+    ): array {
+        return $this->client->snapshot()->status($plan->prepare());
+    }
     #endregion
 
     #region Task
