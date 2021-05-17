@@ -11,6 +11,7 @@ use Elasticsearch\Namespaces\TasksNamespace;
 use Leverage\ElasticSearch\ElasticSearch;
 use Leverage\ElasticSearch\Plan;
 use Leverage\ElasticSearch\Plan\Index;
+use Leverage\ElasticSearch\Plan\Mapping;
 use Leverage\ElasticSearch\Plan\Repository;
 use Leverage\ElasticSearch\Plan\Snapshot;
 use Leverage\ElasticSearch\Plan\Task;
@@ -125,6 +126,24 @@ class ElasticSearchTest extends TestCase
         $this->indices->method('get')->willReturn(self::EXPECTED);
         $plan = $this->createMock(Index\GetIndexPlan::class);
         $response = $this->elasticSearch->getIndex($plan);
+        $this->assertSame(self::EXPECTED, $response);
+    }
+    #endregion
+
+    #region Mapping
+    public function testGetMapping(): void
+    {
+        $this->indices->method('getMapping')->willReturn(self::EXPECTED);
+        $plan = $this->createMock(Mapping\GetMappingPlan::class);
+        $response = $this->elasticSearch->getMapping($plan);
+        $this->assertSame(self::EXPECTED, $response);
+    }
+
+    public function testPutMapping(): void
+    {
+        $this->indices->method('putMapping')->willReturn(self::EXPECTED);
+        $plan = $this->createMock(Mapping\PutMappingPlan::class);
+        $response = $this->elasticSearch->putMapping($plan);
         $this->assertSame(self::EXPECTED, $response);
     }
     #endregion

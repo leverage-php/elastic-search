@@ -7,6 +7,7 @@ namespace Leverage\ElasticSearch;
 use Elasticsearch\Client;
 use Leverage\ElasticSearch\Plan;
 use Leverage\ElasticSearch\Plan\Index;
+use Leverage\ElasticSearch\Plan\Mapping;
 use Leverage\ElasticSearch\Plan\Repository;
 use Leverage\ElasticSearch\Plan\Snapshot;
 use Leverage\ElasticSearch\Plan\Task;
@@ -67,7 +68,22 @@ class ElasticSearch
     public function getIndex(
         Index\GetIndexPlan $plan
     ): array {
+        /** @var array - Required to fix bad docblock type hint in vendor lib */
         return $this->client->indices()->get($plan->prepare());
+    }
+    #endregion
+
+    #region Mapping
+    public function getMapping(
+        Mapping\GetMappingPlan $plan
+    ): array {
+        return $this->client->indices()->getMapping($plan->prepare());
+    }
+
+    public function putMapping(
+        Mapping\PutMappingPlan $plan
+    ): array {
+        return $this->client->indices()->putMapping($plan->prepare());
     }
     #endregion
 
